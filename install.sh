@@ -1,6 +1,11 @@
 #!/bin/bash
 
-BERRYPKG_DIR="$HOME/.berrypkg"
+if [[ $(id -u) -eq 0 ]]; then
+    BERRYPKG_DIR="/var/lib/berrypkg"
+else
+    BERRYPKG_DIR="$HOME/.berrypkg"
+fi
+
 BERRYPKG_JAR="$BERRYPKG_DIR/berrypkg.jar"
 BERRYPKG_SCRIPTS_DIR="$BERRYPKG_DIR/scripts"
 START_SCRIPT="$BERRYPKG_SCRIPTS_DIR/berrypkg"
@@ -23,7 +28,7 @@ install_berrypkg() {
 
     check_java
 
-    mkdir -p "$BERRYPKG_DIR" "$BERRYPKG_SCRIPTS_DIR" "$BIN_DIR"
+    mkdir -p "$BERRYPKG_DIR" "$BERRYPKG_SCRIPTS_DIR"
 
     echo -e "${YELLOW}Downloading BerryPKG v1.0 from GitHub...${NC}"
     curl -L -o "$BERRYPKG_JAR" "$GITHUB_URL"
@@ -68,7 +73,7 @@ uninstall_berrypkg() {
 }
 
 show_menu() {
-    echo "=== BerryPKG v1.0 | Installer ==="
+    echo "=== BerryPKG v1.0 | Installer V2 ==="
     echo "1. Install BerryPKG"
     echo "2. Uninstall BerryPKG"
     echo "3. Exit"
